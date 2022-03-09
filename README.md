@@ -45,7 +45,7 @@ dependencies {
 ## Usage
 
 ```kotlin
-object MyModSettings : SettxiGuiWrapper(LiteralText("My Mod Settings"), File(MinecraftClient.getInstance().runDirectory, "config/mymodconfig.json"))
+object MyModSettings : SettxiGuiWrapper(LiteralText("My Mod Settings"), File(MinecraftClient.getInstance().runDirectory, "config/mymodconfig.json")) {
     // you can have any implementation of MutableList
     override val settings = mutableListOf<Setting<*>>()
 
@@ -64,4 +64,5 @@ object MyModSettings : SettxiGuiWrapper(LiteralText("My Mod Settings"), File(Min
     init {
         load()
     }
+}
 ```
