@@ -1,32 +1,66 @@
 plugins {
-    id("architectury-plugin") version "3.4.+"
-    id("dev.architectury.loom") version "0.11.0.+" apply false
+    id("fabric-loom") version "0.11.+"
+    kotlin("jvm") version "1.6.10"
+    kotlin("plugin.serialization") version "1.6.10"
     base
+    `maven-publish`
 }
 
-subprojects {
-    apply(plugin = "dev.architectury.loom")
+base.archivesName.set("SettxiCloth")
+group = "dev.isxander"
+version = "1.0.1"
 
-    dependencies {
-        val minecraftVersion: String by rootProject
-        "minecraft"("com.mojang:minecraft:$minecraftVersion")
-        "mappings"("net.fabricmc:yarn:1.18.2+build.+:v2")
+repositories {
+    mavenCentral()
+    maven("https://maven.fabricmc.net/")
+    maven("https://repo.woverflow.cc/")
+    maven("https://maven.shedaniel.me/")
+}
+
+dependencies {
+    val minecraftVersion: String by rootProject
+    minecraft("com.mojang:minecraft:$minecraftVersion")
+    mappings("net.fabricmc:yarn:1.18.2+build.+:v2")
+
+    modImplementation("net.fabricmc:fabric-loader:0.13.+")
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.7.1+kotlin.1.6.10")
+
+    api("dev.isxander:settxi:2.1.0")
+    modImplementation("me.shedaniel.cloth:cloth-config-fabric:6.+")
+}
+
+tasks {
+    remapJar {
+        archiveClassifier.set("fabric-1.18.2")
+    }
+
+    processResources {
+        inputs.property("version", project.version)
+        filesMatching("fabric.mod.json") {
+            expand("version" to project.version)
+        }
     }
 }
 
-allprojects {
-    apply(plugin = "java")
-    apply(plugin = "architectury-plugin")
-    apply(plugin = "maven-publish")
+publishing {
+    publications {
+        register<MavenPublication>("settxi") {
+            groupId = "dev.isxander"
+            artifactId = "settxi-cloth-impl"
 
-    base.archivesName.set("SettxiCloth")
-    group = "dev.isxander"
-    version = "1.0.0"
+            from(components["java"])
+        }
+    }
 
     repositories {
-        mavenCentral()
-        maven("https://maven.fabricmc.net/")
-        maven("https://jitpack.io/")
-        maven("https://maven.shedaniel.me/")
+        if (hasProperty("woverflow.token")) {
+            println("Publishing ${project.name} to W-OVERFLOW")
+            maven(url = "https://repo.woverflow.cc/releases") {
+                credentials {
+                    username = "xander"
+                    password = property("woverflow.token") as? String
+                }
+            }
+        }
     }
 }

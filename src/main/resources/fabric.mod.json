@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "settxicloth",
+  "version": "${version}",
+  "name": "Settxi Cloth Impl",
+  "description": "A Cloth Config impementation of Settxi.",
+  "authors": [
+    "isXander"
+  ],
+  "contact": {
+    "homepage": "https://isxander.dev",
+    "issues": "https://github.com/isXander/SettxiCloth/issues",
+    "sources": "https://github.com/isXander/SettxiCloth"
+  },
+  "license": "GPLv3",
+  "environment": "client",
+  "depends": {
+    "fabricloader": ">=0.13.0",
+    "fabric-language-kotlin": ">=1.7.1+kotlin.1.6.10",
+    "minecraft": "~1.18.2",
+    "java": ">=17",
+    "cloth-config": "6.x.x"
+  }
+}

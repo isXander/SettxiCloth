@@ -23,3 +23,5 @@ build
 eclipse
 run/**
 !**/*.gitkeep
+
+/.architectury-transformer
