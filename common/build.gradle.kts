@@ -10,8 +10,8 @@ architectury {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
-    include(implementation("dev.isxander:settxi:2.1.0")!!)
-    modImplementation("me.shedaniel.cloth:cloth-config:6.+")
+    api("dev.isxander:settxi:2.1.0")
+    modApi("me.shedaniel.cloth:cloth-config:6.+")
 }
 
 publishing {
