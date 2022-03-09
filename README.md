@@ -44,6 +44,7 @@ dependencies {
 
 ## Usage
 
+**Creating a Config**
 ```kotlin
 object MyModSettings : SettxiGuiWrapper(LiteralText("My Mod Settings"), File(MinecraftClient.getInstance().runDirectory, "config/mymodconfig.json")) {
     // you can have any implementation of MutableList
@@ -65,4 +66,10 @@ object MyModSettings : SettxiGuiWrapper(LiteralText("My Mod Settings"), File(Min
         load()
     }
 }
+```
+
+**Getting a GUI instance**
+```kotlin
+// just a one liner!
+MyModSettings.clothGui(parentScreenOrNull)
 ```
