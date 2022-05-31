@@ -20,8 +20,8 @@ dependencies {
     // are pretty light-weight libraries
 
     // pick the latest versions, this might not be up to date!
-    include(implementation "dev.isxander:settxi:2.1.0")
-    include(modImplementation "dev.isxander:settxi-cloth-impl:1.0.1:fabric-1.18.2")
+    include implementation("dev.isxander:settxi:2.1.1")
+    include modImplementation("dev.isxander:settxi-cloth-impl:1.0.3:fabric-1.19")
 }
 ```
 
@@ -37,8 +37,8 @@ dependencies {
     // are pretty light-weight libraries
 
     // pick the latest versions, this might not be up to date!
-    include(implementation("dev.isxander:settxi:2.1.0"))
-    include(modImplementation("dev.isxander:settxi-cloth-impl:1.0.1:fabric-1.18.2"))
+    include(implementation("dev.isxander:settxi:2.1.1"))
+    include(modImplementation("dev.isxander:settxi-cloth-impl:1.0.3:fabric-1.19"))
 }
 ```
 

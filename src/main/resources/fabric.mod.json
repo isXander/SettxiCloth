@@ -16,10 +16,10 @@
   "environment": "client",
   "depends": {
     "fabricloader": ">=0.13.0",
-    "fabric-language-kotlin": ">=1.7.1+kotlin.1.6.10",
-    "minecraft": "~1.18.2",
+    "fabric-language-kotlin": ">=1.7.4+kotlin.1.6.21",
+    "minecraft": "1.19.x",
     "java": ">=17",
-    "cloth-config": "6.x.x"
+    "cloth-config": "7.x.x"
   },
   "custom": {
     "modmenu": {

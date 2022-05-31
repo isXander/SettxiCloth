@@ -1,14 +1,16 @@
 plugins {
-    id("fabric-loom") version "0.11.+"
-    kotlin("jvm") version "1.6.10"
-    kotlin("plugin.serialization") version "1.6.10"
+    val kotlinVersion: String by System.getProperties()
+
+    id("fabric-loom") version "0.12.+"
+    kotlin("jvm") version kotlinVersion
+    kotlin("plugin.serialization") version kotlinVersion
     base
     `maven-publish`
 }
 
 base.archivesName.set("SettxiCloth")
 group = "dev.isxander"
-version = "1.0.2"
+version = "1.0.3"
 
 repositories {
     mavenCentral()
@@ -17,21 +19,23 @@ repositories {
     maven("https://maven.shedaniel.me/")
 }
 
+val minecraftVersion: String by rootProject
+val kotlinVersion: String by System.getProperties()
+
 dependencies {
-    val minecraftVersion: String by rootProject
     minecraft("com.mojang:minecraft:$minecraftVersion")
-    mappings("net.fabricmc:yarn:1.18.2+build.+:v2")
+    mappings("net.fabricmc:yarn:$minecraftVersion+build.+:v2")
 
-    modImplementation("net.fabricmc:fabric-loader:0.13.+")
-    modImplementation("net.fabricmc:fabric-language-kotlin:1.7.1+kotlin.1.6.10")
+    modImplementation("net.fabricmc:fabric-loader:0.14.+")
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.7.4+kotlin.$kotlinVersion")
 
-    api("dev.isxander:settxi:2.1.0")
-    modImplementation("me.shedaniel.cloth:cloth-config-fabric:6.+")
+    api("dev.isxander:settxi:2.1.+")
+    modImplementation("me.shedaniel.cloth:cloth-config-fabric:7.+")
 }
 
 tasks {
     remapJar {
-        archiveClassifier.set("fabric-1.18.2")
+        archiveClassifier.set("fabric-$minecraftVersion")
     }
 
     processResources {
@@ -53,12 +57,12 @@ publishing {
     }
 
     repositories {
-        if (hasProperty("woverflow.token")) {
+        if (hasProperty("woverflow.username") && hasProperty("woverflow.password")) {
             println("Publishing ${project.name} to W-OVERFLOW")
             maven(url = "https://repo.woverflow.cc/releases") {
                 credentials {
-                    username = "xander"
-                    password = property("woverflow.token") as? String
+                    username = property("woverflow.username") as? String
+                    password = property("woverflow.password") as? String
                 }
             }
         }
