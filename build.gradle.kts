@@ -10,7 +10,7 @@ plugins {
 
 base.archivesName.set("SettxiCloth")
 group = "dev.isxander"
-version = "1.0.3"
+version = "1.0.4"
 
 repositories {
     mavenCentral()
@@ -29,7 +29,8 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:0.14.+")
     modImplementation("net.fabricmc:fabric-language-kotlin:1.7.4+kotlin.$kotlinVersion")
 
-    api("dev.isxander:settxi:2.1.+")
+    api("dev.isxander.settxi:settxi-core:2.2.3")
+    api("dev.isxander.settxi:settxi-kotlinx-serialization:2.2.3")
     modImplementation("me.shedaniel.cloth:cloth-config-fabric:7.+")
 }
 

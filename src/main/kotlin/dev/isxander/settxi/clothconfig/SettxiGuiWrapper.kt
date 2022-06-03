@@ -1,14 +1,16 @@
 package dev.isxander.settxi.clothconfig
 
+import dev.isxander.settxi.ConfigProcessor
 import dev.isxander.settxi.Setting
 import dev.isxander.settxi.impl.*
-import dev.isxander.settxi.serialization.ConfigProcessor
 import dev.isxander.settxi.serialization.asJson
 import dev.isxander.settxi.serialization.populateFromJson
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import me.shedaniel.clothconfig2.api.ConfigBuilder
+import me.shedaniel.clothconfig2.api.ConfigEntryBuilder
+import me.shedaniel.clothconfig2.impl.builders.EnumSelectorBuilder
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.text.Text
 import java.io.File
@@ -71,13 +73,23 @@ abstract class SettxiGuiWrapper(val title: Text, val file: File) : ConfigProcess
                     setMax(setting.range.endInclusive)
                 }
             is LongSetting ->
-                entryBuilder().startLongSlider(Text.translatable(setting.name), setting.get(), setting.range.first, setting.range.last).apply {
+                entryBuilder().startLongSlider(
+                    Text.translatable(setting.name),
+                    setting.get(),
+                    setting.range.first,
+                    setting.range.last
+                ).apply {
                     defaultValue = Supplier { setting.default }
                     setTooltip(Text.translatable(setting.description))
                     setSaveConsumer { setting.set(it) }
                 }
             is IntSetting ->
-                entryBuilder().startIntSlider(Text.translatable(setting.name), setting.get(), setting.range.first, setting.range.last).apply {
+                entryBuilder().startIntSlider(
+                    Text.translatable(setting.name),
+                    setting.get(),
+                    setting.range.first,
+                    setting.range.last
+                ).apply {
                     defaultValue = Supplier { setting.default }
                     setTooltip(Text.translatable(setting.description))
                     setSaveConsumer { setting.set(it) }
@@ -89,15 +101,22 @@ abstract class SettxiGuiWrapper(val title: Text, val file: File) : ConfigProcess
                     setSaveConsumer { setting.set(it) }
                 }
             is OptionSetting ->
-                entryBuilder().startStringDropdownMenu(Text.translatable(setting.name), setting.get().name) { Text.translatable(it) }.apply {
+                entryBuilder().startStringDropdownMenu(
+                    Text.translatable(setting.name),
+                    setting.get().name
+                ) { Text.translatable(it) }.apply {
                     defaultValue = Supplier { setting.default.name }
                     setTooltip(Text.translatable(setting.description))
                     isSuggestionMode = false
                     setSelections(setting.options.map { Text.translatable(it.name).string })
-                    setSaveConsumer { setting.set(setting.options.first { option ->
-                        Text.translatable(option.name).string == it
-                    })}
+                    setSaveConsumer {
+                        setting.set(setting.options.first { option ->
+                            Text.translatable(option.name).string == it
+                        })
+                    }
                 }
+            is EnumSetting<*> ->
+                setting.toEnumSelector(entryBuilder())
             is FileSetting ->
                 throw UnsupportedOperationException("Cloth config does not support file settings")
 
@@ -113,5 +132,14 @@ abstract class SettxiGuiWrapper(val title: Text, val file: File) : ConfigProcess
             }
         }
     }
+
+    private fun <T : Enum<T>> EnumSetting<T>.toEnumSelector(entryBuilder: ConfigEntryBuilder): EnumSelectorBuilder<T> =
+        entryBuilder.startEnumSelector(Text.translatable(name), enumClass, get()).apply {
+            defaultValue = Supplier { default }
+            setTooltip(Text.translatable(description))
+            setSaveConsumer { set(it) }
+            setEnumNameProvider { Text.translatable(nameProvider(it as T)) }
+        }
+
 }
 
