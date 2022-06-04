@@ -13,26 +13,26 @@ import me.shedaniel.clothconfig2.api.ConfigEntryBuilder
 import me.shedaniel.clothconfig2.impl.builders.EnumSelectorBuilder
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.text.Text
-import java.io.File
+import java.nio.file.Path
 import java.util.function.Supplier
+import kotlin.io.path.notExists
+import kotlin.io.path.readText
+import kotlin.io.path.writeText
 
-abstract class SettxiGuiWrapper(val title: Text, val file: File) : ConfigProcessor {
+abstract class SettxiGuiWrapper(val title: Text, val path: Path, val json: Json = Json) : ConfigProcessor {
     override val settings = mutableListOf<Setting<*>>()
 
     fun load() {
-        if (!file.exists()) {
+        if (path.notExists()) {
             save()
             return
         }
 
-        settings.populateFromJson(Json.decodeFromString(file.readText()))
+        settings.populateFromJson(Json.decodeFromString(path.readText()))
     }
 
     fun save() {
-        if (!file.exists())
-            file.createNewFile()
-
-        file.writeText(Json.encodeToString(settings.asJson()))
+        path.writeText(json.encodeToString(settings.asJson()))
     }
 
     fun clothGui(parent: Screen? = null): Screen =
