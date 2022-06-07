@@ -15,7 +15,7 @@
   "license": "GPLv3",
   "environment": "client",
   "depends": {
-    "fabricloader": ">=0.13.0",
+    "fabricloader": ">=0.14.0",
     "fabric-language-kotlin": ">=1.7.4+kotlin.1.6.21",
     "minecraft": "1.19.x",
     "java": ">=17",
