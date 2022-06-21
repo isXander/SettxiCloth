@@ -1,8 +1,8 @@
 package dev.isxander.settxi.clothconfig
 
+import dev.isxander.settxi.ConfigProcessor
 import dev.isxander.settxi.Setting
 import dev.isxander.settxi.impl.*
-import dev.isxander.settxi.serialization.ConfigProcessor
 import dev.isxander.settxi.serialization.asJson
 import dev.isxander.settxi.serialization.populateFromJson
 import kotlinx.serialization.decodeFromString

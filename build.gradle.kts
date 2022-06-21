@@ -8,7 +8,7 @@ plugins {
 
 base.archivesName.set("SettxiCloth")
 group = "dev.isxander"
-version = "1.0.2"
+version = "1.0.3"
 
 repositories {
     mavenCentral()
