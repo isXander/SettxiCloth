@@ -1,7 +1,7 @@
 plugins {
     id("fabric-loom") version "0.11.+"
-    kotlin("jvm") version "1.6.10"
-    kotlin("plugin.serialization") version "1.6.10"
+    kotlin("jvm") version "1.7.0"
+    kotlin("plugin.serialization") version "1.7.0"
     base
     `maven-publish`
 }
@@ -23,9 +23,10 @@ dependencies {
     mappings("net.fabricmc:yarn:1.18.2+build.+:v2")
 
     modImplementation("net.fabricmc:fabric-loader:0.13.+")
-    modImplementation("net.fabricmc:fabric-language-kotlin:1.7.1+kotlin.1.6.10")
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.8.0+kotlin.1.7.0")
 
-    api("dev.isxander:settxi:2.1.0")
+    api("dev.isxander.settxi:settxi-core:2.3.0")
+    api("dev.isxander.settxi:settxi-kotlinx-serialization:2.3.0")
     modImplementation("me.shedaniel.cloth:cloth-config-fabric:6.+")
 }
 
@@ -44,7 +45,7 @@ tasks {
 
 publishing {
     publications {
-        register<MavenPublication>("settxi") {
+        register<MavenPublication>("settxiCloth") {
             groupId = "dev.isxander"
             artifactId = "settxi-cloth-impl"
 
@@ -53,12 +54,11 @@ publishing {
     }
 
     repositories {
-        if (hasProperty("woverflow.token")) {
-            println("Publishing ${project.name} to W-OVERFLOW")
-            maven(url = "https://repo.woverflow.cc/releases") {
+        if (hasProperty("xander-repo.username") && hasProperty("xander-repo.password")) {
+            maven(url = "https://maven.isxander.dev/releases") {
                 credentials {
-                    username = "xander"
-                    password = property("woverflow.token") as? String
+                    username = property("xander-repo.username") as? String
+                    password = property("xander-repo.password") as? String
                 }
             }
         }

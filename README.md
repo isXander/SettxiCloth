@@ -11,7 +11,7 @@ GUIDES ASSUME YOU ALREADY HAVE KOTLIN INSTALLED!**
 *Groovy DSL*
 ```groovy
 repositories {
-    maven { url = 'https://repo.woverflow.cc/' }
+    maven { url = 'https://maven.isxander.dev/' }
 }
 
 dependencies {
@@ -20,7 +20,7 @@ dependencies {
     // are pretty light-weight libraries
 
     // pick the latest versions, this might not be up to date!
-    include(implementation "dev.isxander:settxi:2.1.0")
+    include(implementation "dev.isxander.settxi:settxi-core:2.3.0")
     include(modImplementation "dev.isxander:settxi-cloth-impl:1.0.1:fabric-1.18.2")
 }
 ```
@@ -52,7 +52,7 @@ object MyModSettings : SettxiGuiWrapper(LiteralText("My Mod Settings"), File(Min
 
     // Settxi DSL code goes here!
     // you can find a pretty neat example from my mod, Zoomify
-    // https://github.com/isXander/Zoomify/blob/1.18/src/main/kotlin/dev/isxander/zoomify/config/ZoomifySettings.kt
+    // https://github.com/isXander/Zoomify/blob/1.19/src/main/kotlin/dev/isxander/zoomify/config/ZoomifySettings.kt
 
     var myIntProperty by int(default = 5) {
         name = "you can have the translation key or literal text here"
