@@ -1,3 +1,5 @@
+# THIS PROJECT HAS BEEN MERGED WITH [SETTXI](https://github.com/isxander/settxi) AND IS NOW ARCHIVED
+
 # Settxi Cloth Implementation
 
 A simple library that implements a Cloth Config GUI on top of my settings library, [Settxi](https://github.com/isXander/Settxi)!
